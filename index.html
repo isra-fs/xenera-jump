@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="/socket.io/socket.io.js"></script>
+    <script src="js/main.js"></script>
     <title>Document</title>
     <style>
      .parallax{
@@ -21,20 +22,4 @@
     <div class="parallax" style=" background-image: url(css/images/3.jpg)"></div>
     <div class="parallax" style=" background-image: url(css/images/4.jpg)"></div>
 </body>
-<script>
-    var socket = io();
-    console.log(socket)
-    socket.on("levelUp",function(){
-        console.log("jump")
-        scrollTop()
-    })
-    function scrollTop(){
-        window.scrollBy(0,-2);
-    }
-   function scroDown() {
-   for(let i=0; i<100; i++){
-       setTimeout( window.scrollBy(0, 100),2000);
-   }
-}
-</script>
 </html>
