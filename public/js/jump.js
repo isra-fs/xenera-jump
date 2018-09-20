@@ -1,13 +1,8 @@
-
 var socket = io();
-//window.addEventListener("devicemotion", accelerometerUpdate, true);
 
-
-
- // querySelector returns the first element it finds with the correct selector
-        // addEventListener is roughly analogous to $.on()
-        
-
+socket.on("stopJump",function(){
+    window.removeEventListener("devicemotion", accelerometerUpdate,true);
+})
 function startGame (){
     document.querySelector('.start-jumping').addEventListener('click', function(e) {
         e.preventDefault();
@@ -18,14 +13,24 @@ function startGame (){
             el.classList.toggle('show');
         });
     });
-    window.addEventListener("devicemotion", accelerometerUpdate, true);
-    
+    socket.emit("startGame",true);
+    window.addEventListener("devicemotion", accelerometerUpdate,true);
+
 }
+var weCanJump= true;
+setInterval(function(){
+    if(!weCanJump){
+        weCanJump = true ? true : false;
+    }
+},500)
 function accelerometerUpdate(event) {
     var ax= event.acceleration.x * 100 ;
     var ay = event.acceleration.y * 100 ;
     var az = event.acceleration.z * 100 ;
-    if (ay > 400 || ax > 400 || az > 400 ){
-        socket.emit("jump",true);
+    if (ay > 600 || ax > 600 || az > 600 ){
+        if(weCanJump){
+            socket.emit("jump",true)
+            weCanJump=false;
+        }
     }
 }

@@ -14,8 +14,7 @@ app.get('/jump', function(req, res){
 io.on('connection', function(socket){
   console.log('a user connected');
   socket.on('startGame', function(msg){
-    console.log('message: ' + msg);
-    scroDown();
+    io.emit("letsPlay",true);
   });
   socket.on("jump",function(){
       console.log("jump")
@@ -26,12 +25,3 @@ io.on('connection', function(socket){
 http.listen(3000, function(){
   console.log('listening on *:3000');
 });
-
-function scroDown() {
-   for(let i=0; i<5; i++){
-    window.scrollBy(0, 100);
-   }
-}
-function scroTop() {
-    window.scrollBy(0, -100);
-}
