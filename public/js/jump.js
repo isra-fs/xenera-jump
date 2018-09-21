@@ -1,8 +1,10 @@
 var socket = io();
 
-socket.on("stopJump",function(){
+socket.on("stopJumpPhone",function(){
     window.removeEventListener("devicemotion", accelerometerUpdate,true);
-})
+    // document.querySelectorAll('.xenera-jump > h2').style.display = "none";
+    //document.querySelector('.start-jumping').style.display="block";
+});
 function startGame (){
     document.querySelector('.start-jumping').addEventListener('click', function(e) {
         e.preventDefault();

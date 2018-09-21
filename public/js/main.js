@@ -1,10 +1,19 @@
 
 var socket = io();
-console.log(socket)
+var jumps=0;
+
 socket.on("letsPlay",function(data){
     let timeElm = document.getElementById('timeElm');
     let timer = function(x) {
     if(x === 0) {
+        socket.emit("stopJump",true);
+        setTimeout(function() {
+            location.reload();
+            scroDown();
+        }, 5000);
+        jumps=0;
+
+        
         return;
     }
     timeElm.innerHTML = x;
@@ -15,6 +24,8 @@ socket.on("letsPlay",function(data){
 socket.on("levelUp",function(){
     console.log("jump")
     scrollTop()
+    jumps++;
+    document.getElementById("jumps").innerHTML=jumps;
 })
 var c=0;
 function scrollTop(){
