@@ -1,4 +1,6 @@
 var express = require('express');
+const opn = require('opn');
+
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -9,10 +11,10 @@ app.get('/', function(req, res){
 });
 app.get('/jump', function(req, res){
     res.sendFile(__dirname + '/jump.html');
-  });
+});
 
 io.on('connection', function(socket){
-  console.log('a user connected');
+
   socket.on('startGame', function(msg){
     io.emit("letsPlay",true);
   });
@@ -25,5 +27,7 @@ io.on('connection', function(socket){
 });
 
 http.listen(3000, function(){
-  console.log('listening on *:3000');
+  console.log("##############Server is working##############")
+  console.log("Write in your browser: " + "localhost:3000")
+  opn('http://localhost:3000', {app: 'Chrome'});
 });

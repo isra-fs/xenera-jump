@@ -1,5 +1,4 @@
 var socket = io();
-
 socket.on("stopJumpPhone",function(){
     window.removeEventListener("devicemotion", accelerometerUpdate,true);
     // document.querySelectorAll('.xenera-jump > h2').style.display = "none";
@@ -17,7 +16,6 @@ function startGame (){
     });
     socket.emit("startGame",true);
     window.addEventListener("devicemotion", accelerometerUpdate,true);
-
 }
 var weCanJump= true;
 setInterval(function(){
