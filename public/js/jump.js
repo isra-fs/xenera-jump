@@ -1,18 +1,14 @@
 var socket = io();
 socket.on("stopJumpPhone",function(){
     window.removeEventListener("devicemotion", accelerometerUpdate,true);
-    // document.querySelectorAll('.xenera-jump > h2').style.display = "none";
-    //document.querySelector('.start-jumping').style.display="block";
+    document.querySelector('.start-jumping').classList.remove('hide-jumping');
+    document.getElementById('jumping').classList.toggle('hide-jumping');
 });
 function startGame (){
-    document.querySelector('.start-jumping').addEventListener('click', function(e) {
-        e.preventDefault();
-        this.classList.toggle('hide-jumping');
-        // and grab it with a simple querySelector
-        [].map.call(document.querySelectorAll('.xenera-jump > h2'), function(el) {
-        // classList supports 'contains', 'add', 'remove', and 'toggle'
-            el.classList.toggle('show');
-        });
+    event.preventDefault();
+    document.querySelector('.start-jumping').classList.toggle('hide-jumping');
+    [].map.call(document.querySelectorAll('.xenera-jump > h2'), function(el) {
+        el.classList.toggle('show');
     });
     socket.emit("startGame",true);
     window.addEventListener("devicemotion", accelerometerUpdate,true);

@@ -6,41 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/main.js"></script>
-    <title>Document</title>
-    <style>
-     .parallax{
-        min-height: 1080px; 
-        background-size: cover;
-     }
-     .cohete {
-        /* The image used 
-        background-image: url('css/images/cohete.gif');*/
-        /* Full height */
-        height: 300px; 
-        /* Create the parallax scrolling effect */
-        margin: 0 auto;;
-    }
-    </style>
+    <link rel="stylesheet" href="css/main.css">
+    <title>Jump</title>
 </head>
-
 <body>
-    <button onclick="go()">adfaa</button>
-<div style="position: fixed;bottom: 0;width: 100%;text-align: center;" id="cohete">  <img class="cohete" src="css/images/cohete.gif"></img></div>
-  
-    <div id="timeElm" style="width: 500px;
-    height: 200px;
-    text-align: center;
-    line-height: 2;
-    position: fixed;
-    background-color: cornflowerblue;
-    font-size: 100px;left:0;" ></div>
-    <div id="jumps" style="width: 500px;
-    height: 200px;
-    text-align: center;
-    line-height: 2;
-    position: fixed;
-    background-color: cornflowerblue;
-    font-size: 100px;right: 0;" ></div>
+<div style="position: fixed;bottom: 0;width: 100%;text-align: center;" id="cohete">  
+    <img class="cohete" src="css/images/cohete.gif"></img>
+</div>
+    <div id="timeElm"></div>
+    <div id="jumps"></div>
     <div class="parallax" style=" background-image: url(css/images/1.jpg)"></div>
     <div class="parallax" style=" background-image: url(css/images/2.jpg)"></div>
     <div class="parallax" style=" background-image: url(css/images/3.jpg)"></div>

@@ -17,7 +17,7 @@ socket.on("letsPlay",function(data){
     timeElm.innerHTML = x;
         return setTimeout(() => {timer(--x)}, 1000)
     }
-    timer(30);
+    timer(60);
 });
 socket.on("levelUp",function(){
     console.log("jump")

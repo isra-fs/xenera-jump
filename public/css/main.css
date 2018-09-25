@@ -1,0 +1,23 @@
+.parallax{
+    min-height: 1080px; 
+    background-size: cover;
+ }
+ .cohete {
+    height: 300px; 
+    margin: 0 auto;;
+}
+#timeElm,#jumps{
+    width: 500px;
+    height: 200px;
+    text-align: center;
+    line-height: 2;
+    position: fixed;
+    background-color: white;
+    font-size: 100px;
+}
+#timeElm{
+    left:0;
+}
+#jumps{
+    right: 0;
+}
