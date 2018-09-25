@@ -2,6 +2,7 @@
 var socket = io();
 var jumps=0;
 socket.on("letsPlay",function(data){
+    scroDown();
     let timeElm = document.getElementById('timeElm');
     let timer = function(x) {
     if(x === 0) {
@@ -27,7 +28,7 @@ socket.on("levelUp",function(){
 })
 var c=0;
 function scrollTop(){
-    window.scrollBy(0,-20);
+    window.scrollBy(0,-40);
     console.log(c++)
 }
 function scroDown() {
