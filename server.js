@@ -25,9 +25,33 @@ io.on('connection', function(socket){
     io.emit("stopJumpPhone",true);
   });
 });
-
+function getIPAddress() {
+  var addrInfo, ifaceDetails, _len;
+  var localIPInfo = {};
+  //Get the network interfaces
+  var networkInterfaces = require('os').networkInterfaces();
+  //Iterate over the network interfaces
+  for (var ifaceName in networkInterfaces) {
+      ifaceDetails = networkInterfaces[ifaceName];
+      //Iterate over all interface details
+      for (var _i = 0, _len = ifaceDetails.length; _i < _len; _i++) {
+          addrInfo = ifaceDetails[_i];
+          if (addrInfo.family === 'IPv4') {
+              //Extract the IPv4 address
+              if (!localIPInfo[ifaceName]) {
+                  localIPInfo[ifaceName] = {};
+              }
+            localIPInfo[ifaceName].IPv4 = addrInfo.address;
+           }
+      }
+  }
+  if(localIPInfo["Wi-Fi"])
+    return localIPInfo["Wi-Fi"];
+  else return localIPInfo
+}
 http.listen(3000, function(){
   console.log("##############Server is working##############")
-  console.log("Write in your browser: " + "localhost:3000")
+  var wifiAddress =getIPAddress();
   opn('http://localhost:3000', {app: 'Chrome'});
+  console.log("Write in your Device browser: " +"http://"+ wifiAddress.IPv4 +":3000/jump")
 });
