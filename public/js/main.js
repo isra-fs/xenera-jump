@@ -24,11 +24,11 @@ socket.on("levelUp",function(){
     console.log("jump")
     scrollTop()
     jumps++;
-    document.getElementById("jumps").innerHTML=jumps;
+    document.getElementById("jumps").innerHTML=Math.trunc(jumps/2);
 })
 var c=0;
 function scrollTop(){
-    window.scrollBy(0,-40);
+    window.scrollBy(0,-10);
     console.log(c++)
 }
 function scroDown() {
