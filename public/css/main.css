@@ -6,14 +6,23 @@
     height: 300px; 
     margin: 0 auto;;
 }
-#timeElm,#jumps{
-    width: 500px;
-    height: 200px;
-    text-align: center;
-    line-height: 2;
+.header{
+    width: 100%;
     position: fixed;
-    background-color: white;
+    background: white;
+    height: 150px;
+}
+#timeElm,#jumps,#myProgress{
+    width: 33%;
+    text-align: center;
+    line-height: 150px;
     font-size: 100px;
+    float: left;
+    height: 200px;
+}
+#myProgress{
+    height: 60px;
+    margin: 45px auto 45px auto;
 }
 #timeElm{
     left:0;

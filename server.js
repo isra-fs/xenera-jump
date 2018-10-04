@@ -19,7 +19,6 @@ io.on('connection', function(socket){
     io.emit("letsPlay",true);
   });
   socket.on("jump",function(){
-    console.log("jump")
       io.emit('levelUp',true);
   });
   socket.on("stopJump",function(){
