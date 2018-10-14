@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="/socket.io/socket.io.js"></script>
-    <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
     <title>Jump</title>
 </head>
 <body>
-<div style="position: fixed;bottom: 0;width: 100%;text-align: center;" id="cohete">  
-    <img class="cohete" src="css/images/cohete.gif"></img>
-</div>
-<div class="header">
-    <div id="timeElm"></div>
-    <progress id="myProgress" value="0" max="100" ></progress>
-    <div id="jumps"></div>
-    
-</div>
-    
-    <div class="parallax" style=" background-image: url(css/images/1.jpg)"></div>
-    <div class="parallax" style=" background-image: url(css/images/2.jpg)"></div>
-    <div class="parallax" style=" background-image: url(css/images/3.jpg)"></div>
-    <div class="parallax" style=" background-image: url(css/images/4.jpg)"></div>
+<section id="videos">
+    <video width="100%" id="xeneraVideo"  controls autoplay></video>
+</section>
+<section id="game">
+    <div style="position: fixed;bottom: 0;width: 100%;text-align: center;" id="cohete">  
+            <img class="cohete" src="css/images/cohete.gif"></img>
+    </div>
+    <div class="header">
+        <div id="timeElm"></div>
+        <progress id="myProgress" value="0" max="100" ></progress>
+        <div id="jumps"></div>   
+    </div>
+    <div class="parallax" style=" background-image: url(css/images/background.png)"></div>
+</section>    
 </body>
+<script src="js/main.js"></script>
 </html>
