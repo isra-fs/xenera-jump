@@ -1,8 +1,8 @@
 
 
 .parallax{
-    min-height: 8623px; 
-    width: 1960px;
+    min-height: 9101px; 
+    width: 1920px;
  }
  .cohete {
     height: 300px; 
@@ -11,7 +11,7 @@
 .header{
     width: 100%;
     position: fixed;
-    background: white;
+    background: transparent;
     height: 150px;
 }
 #timeElm,#jumps,#myProgress{

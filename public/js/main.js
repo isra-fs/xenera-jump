@@ -7,6 +7,9 @@
     var c=0;
     var socket = io();
     var jumps=0;
+    var auxCont=0;
+    var pictureNumber =0;
+    var difficulty;
     var myProgress={
         heightTotal:0,
         totalAvanced:0
@@ -16,6 +19,7 @@
     var videoSection = document.getElementById("videos");
     initVIdeo();
     socket.on("letsPlay",function(data){
+        difficulty = "easy"
         video.pause();
         videoSection.style.display="none";
         gameSection.style.display="block";
@@ -37,18 +41,26 @@
         timeElm.innerHTML = x;
             return setTimeout(() => {timer(--x)}, 1000)
         }
-        timer(10);
+        timer(60);
     });
+    
     socket.on("levelUp",function(){
         scrollTop()
         jumps++;
         document.getElementById("jumps").innerHTML=Math.trunc(jumps/2);
         document.getElementById("myProgress").value= myProgress.totalAvanced;
     })
-   
+    var changePicture =Math.trunc (9101/30/5);
     function scrollTop(){
-        myProgress.totalAvanced+=10;
-        window.scrollBy(0,-10);
+        myProgress.totalAvanced+=30;
+        auxCont++;
+        window.scrollBy(0,-30);
+        if(auxCont===changePicture){
+            pictureNumber=pictureNumber+1;
+            auxCont=0;
+            var image = document.getElementById("players");
+            image.src = "css/images/" + pictureNumber + ".png";
+        }
     }
     function scroDown() {
         for(let i=0; i<100; i++){
