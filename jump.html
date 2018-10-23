@@ -16,9 +16,21 @@
 </head>
 <body>
 <div class="xenera-jump">
-    <button onclick="jumpPhone.startGame()"class="start-jumping" id="startJumping" >Start Jumping</button>
-    <h2 id="jumping">You can jump</h2>
-  
+    
+    <form>
+        <h2>Difultad:</h2>
+        <select id="difficulty" name="colorsList"
+        onchange="seeColor(this)">
+        <option value="40"selected="selected">Dificil</option>
+        <option value="50">Normal</option>
+        <option value="60">Facil</option>
+        </select>
+        <h2>Nombre:</h2>
+        <input type="text" id="playerNamer"/>
+        <h2>Email:</h2>
+        <input type="email"id="playerMail" required/>
+    </form>
+<button onclick="jumpPhone.startGame()"class="start-jumping" id="startJumping" >Start Jumping</button>  
 </div>
 </body>
 </html>

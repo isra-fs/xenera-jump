@@ -6,7 +6,7 @@ var jumpPhone = (function(w,d){
     socket.on("stopJumpPhone",function(){
         w.removeEventListener("devicemotion",motionDetectionHandler);
         d.querySelector('.start-jumping').classList.remove('hide-jumping');
-        d.getElementById('jumping').classList.toggle('hide-jumping');
+       // d.getElementById('jumping').classList.toggle('hide-jumping');
     });
     function motionDetectionHandler(e){
         goDown = e.accelerationIncludingGravity.y< 0 ? true: goDown;
@@ -20,10 +20,22 @@ var jumpPhone = (function(w,d){
     }
     return {
         startGame: function(){
-            d.querySelector('.start-jumping').classList.toggle('hide-jumping');
-            d.querySelector('h2').classList.toggle('show');
-            socket.emit("startGame",true);
-            w.addEventListener('devicemotion',motionDetectionHandler)
+           // d.querySelector('.start-jumping').classList.toggle('hide-jumping');
+            var difficultyList = document.getElementById("difficulty");
+            var difficulty = difficultyList.options[difficultyList.selectedIndex].value;
+            var playerNamer = document.getElementById("playerNamer").value;
+            var playerMail= document.getElementById("playerMail").value; 
+            if(playerMail  && playerNamer){
+                difficulty= Number(difficulty)
+                var  player ={
+                    "difficulty":difficulty,
+                    "playerName": playerNamer,
+                    "playerMail" :playerMail
+                }            
+                socket.emit("startGame",player);
+                w.addEventListener('devicemotion',motionDetectionHandler)
+            }
+           
         }
     }
 }(window,document));
