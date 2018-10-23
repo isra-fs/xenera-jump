@@ -4,7 +4,9 @@
         'css/images/2.gif',
         'css/images/3.gif',
         'css/images/4.gif',
-        'css/images/5.gif'
+        'css/images/5.gif',
+        'css/images/6.gif',
+        'css/images/7.gif'
     ];
     var videos=[
         "videos/1.mp4",
@@ -30,16 +32,19 @@
     var videoSection = document.getElementById("videos");
     var image = document.getElementById("players");
     var winSection = document.getElementById("win")
-    
+    var totalTimer=0;
+    var timeForPlay = 60;
     socket.on("saveAnReload",function(){
-        location.reload();
+        player.totalTimer= totalTimer;
+        sentNewPlayer(player)
+        location.reload()
     })
     initVIdeo();
     socket.on("letsPlay",function(data){
         player = data;
             const promesa = new Promise(
                 function(resolve, reject) {
-                    difficulty = 480;
+                    difficulty = 30;
                     video.pause();
                     videoSection.style.display="none";
                     winSection.style.display="none";
@@ -73,7 +78,7 @@
     var jumping= true;
     function scrollTop(){
         if(jumping){
-            timer(60);
+            timer(timeForPlay);
             jumping=false;
         }
         var myBodyHeight = document.body.clientHeight;
@@ -100,14 +105,34 @@
         setTimeout(function(){
             gameSection.style.display="none"
             winSection.style.display="block";
-            var totalTimer =60- timeJumping;
+            totalTimer =timeForPlay- timeJumping;
             modal.style.display = "block";
-            modalImg.src = 'css/images/winner.gif';
-            document.getElementById("points").innerHTML="Felicidades: " +player.playerName+ " Time: "+ totalTimer;
+            modalImg.src = 'css/images/winner.jpg';
+            document.getElementById("points").innerHTML=totalTimer;
+            document.getElementById("playerName").innerHTML=player.playerName;
             socket.emit("weFinish",true);
 
         },2000)
     }
+    function sentNewPlayer(player){
+        console.log(player)
+        var name = player.playerName;
+        var mail =player.playerMail;// player."isra.fsol@gmail.com";
+        var time = player.totalTimer;
+        var data = "name="+name+"&mail="+mail+"&time="+time;
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                console.log(this.responseText);
+            }
+        });
+        xhr.open("POST", "http://localhost:3000/player");
+        xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+        xhr.setRequestHeader("cache-control", "no-cache");
+        xhr.setRequestHeader("postman-token", "5974cb88-d26b-faff-2758-5e2ee6a4f6c9");
+        xhr.send(data);
+     }
     function loopVideos(){
         var whatVideo =Math.floor((Math.random() * videos.length));
         console.log(whatVideo)
