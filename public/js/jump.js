@@ -1,13 +1,29 @@
+var socket = io();
 var jumpPhone = (function(w,d){
     var goDown = false;
     var goUp = false;
     var c=0;
-    var socket = io();
+    
+    //window.confirm("Fin Del Juego Acepta para Terminar");
+    socket.on('aceptFinish',function(){
+       //w.confirm("Fin Del Juego Acepta para Terminar");
+       finishCurrentGame()
+    })
     socket.on("stopJumpPhone",function(){
         w.removeEventListener("devicemotion",motionDetectionHandler);
         d.querySelector('.start-jumping').classList.remove('hide-jumping');
        // d.getElementById('jumping').classList.toggle('hide-jumping');
+       finishCurrentGame()
     });
+    function finishCurrentGame(){
+        if (confirm("Fin Del Juego Acepta para Terminar!")) {
+            socket.emit('endFromPhone',true);
+             location.reload() 
+        } else {
+                socket.emit('endFromPhone',true);
+            location.reload()        
+        } 
+    }
     function motionDetectionHandler(e){
         goDown = e.accelerationIncludingGravity.y< 0 ? true: goDown;
         goUp= e.accelerationIncludingGravity.y>5 ?true:goUp;
@@ -20,15 +36,11 @@ var jumpPhone = (function(w,d){
     }
     return {
         startGame: function(){
-           // d.querySelector('.start-jumping').classList.toggle('hide-jumping');
-            var difficultyList = document.getElementById("difficulty");
-            var difficulty = difficultyList.options[difficultyList.selectedIndex].value;
+           
             var playerNamer = document.getElementById("playerNamer").value;
             var playerMail= document.getElementById("playerMail").value; 
             if(playerMail  && playerNamer){
-                difficulty= Number(difficulty)
                 var  player ={
-                    "difficulty":difficulty,
                     "playerName": playerNamer,
                     "playerMail" :playerMail
                 }            

@@ -14,9 +14,13 @@ app.get('/jump', function(req, res){
 });
 
 io.on('connection', function(socket){
-
+  socket.on("endFromPhone",function(){
+    console.log("saveAnReload")
+    io.emit("saveAnReload",true);
+  })
   socket.on('startGame', function(msg){
-    io.emit("letsPlay",true);
+    console.log(msg)
+    io.emit("letsPlay",msg);
   });
   socket.on("jump",function(){
       io.emit('levelUp',true);
@@ -24,6 +28,10 @@ io.on('connection', function(socket){
   socket.on("stopJump",function(){
     io.emit("stopJumpPhone",true);
   });
+  socket.on('weFinish',function(){
+    console.log("weFinihs")
+    io.emit('aceptFinish',true);
+  })
 });
 function getIPAddress() {
   var addrInfo, ifaceDetails, _len;
@@ -52,6 +60,6 @@ function getIPAddress() {
 http.listen(3000, function(){
   console.log("##############Server is working##############")
   var wifiAddress =getIPAddress();
-  opn('http://localhost:3000', {app: 'Chrome'});
+ // opn('http://localhost:3000', {app: 'Chrome'});
   console.log("Write in your Device browser: " +"http://"+ wifiAddress.IPv4 +":3000/jump")
 });

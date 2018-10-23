@@ -30,12 +30,16 @@
     var videoSection = document.getElementById("videos");
     var image = document.getElementById("players");
     var winSection = document.getElementById("win")
+    
+    socket.on("saveAnReload",function(){
+        location.reload();
+    })
     initVIdeo();
     socket.on("letsPlay",function(data){
         player = data;
             const promesa = new Promise(
                 function(resolve, reject) {
-                    difficulty = data.difficulty;
+                    difficulty = 480;
                     video.pause();
                     videoSection.style.display="none";
                     winSection.style.display="none";
@@ -93,7 +97,6 @@
     function go(){
         document.querySelector("#cohete").style.transition = "all 2s";   
         document.querySelector("#cohete").style.bottom="1000px";
-        socket.emit("stopJump",true);
         setTimeout(function(){
             gameSection.style.display="none"
             winSection.style.display="block";
@@ -101,6 +104,8 @@
             modal.style.display = "block";
             modalImg.src = 'css/images/winner.gif';
             document.getElementById("points").innerHTML="Felicidades: " +player.playerName+ " Time: "+ totalTimer;
+            socket.emit("weFinish",true);
+
         },2000)
     }
     function loopVideos(){

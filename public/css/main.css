@@ -2,7 +2,7 @@
 
 .parallax{
     min-height: 9101px; 
-    width: 1920px;
+    background-size: 100% 9101px;
  }
  .cohete {
     height: 400px; 
