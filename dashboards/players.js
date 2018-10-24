@@ -35,6 +35,18 @@ function getPlayers(limit,db, callback) {
             })
     });
 }
+
+
+function delteDEv(db) {
+
+    db.run(" DELETE  FROM players ", function(err) {
+        if (err) {
+            return console.error(err.message);
+        }
+        console.log("delete all from players");
+    });
+}
+module.exports.delteDEv= delteDEv;
 /*exporting all functions*/
 module.exports.newPlayer = newPlayer;
 module.exports.getPlayers = getPlayers;

@@ -1,7 +1,10 @@
  body {
  background-color: #06101e;
 }
-
+section#loadingSection{
+    width: 100%;
+    display: none;
+}
 .parallax{
     min-height: 9101px; 
  }

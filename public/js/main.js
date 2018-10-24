@@ -10,7 +10,7 @@
     ];
     var videos=[
         "videos/1.mp4",
-        "videos/2.mp4"
+        "videos/1.mp4"
     ]
     var c=0;
     var socket = io();
@@ -35,7 +35,6 @@
     var timeForPlay = 60;
     socket.on("saveAnReload",function(){
         player.totalTimer= totalTimer;
-        console.log("saveAnReload")
         sentNewPlayer(player)
         location.reload()
     })
@@ -44,27 +43,29 @@
         player = data;
             const promesa = new Promise(
                 function(resolve, reject) {
-                    difficulty = 530;
+                    difficulty = 400;
                     video.pause();
                     videoSection.style.display="none";
                     winSection.style.display="none";
                     gameSection.style.display="block";
                     myProgress.heightTotal = document.body.scrollHeight;
                     document.getElementById("myProgress").max=  myProgress.heightTotal;
+                    image.src=travellers[0];
                 }
             );
-        promesa.then(scroDown()).then(setTimeout(()=>{image.src=travellers[0]},6000))
+        promesa.then(scroDown())
+        .then(setTimeout(()=>{
+            socket.emit("activaDeviceMotion",true);
+        },6000))
     });
     let timeElm = document.getElementById('timeElm');
     let timer = (x)=> {
         if(x === 0) {
-            socket.emit("stopJump",true);
-            setTimeout(function() {location.reload();}, 5000);
+            finishGame(false);
             jumps=0;
             return;
         }
         timeJumping=x;
-        console.log(timeJumping)
         timeElm.innerHTML = x;
             return setTimeout(() => {timer(--x)}, 1000)
     }
@@ -91,7 +92,8 @@
             pictureNumber=pictureNumber+1;
             auxCont=0;
             if(pictureNumber===travellers.length){
-                go(); 
+                finishGame(true); 
+                return;
             }else{
                 image.src = travellers[pictureNumber];
             }
@@ -100,19 +102,29 @@
     function scroDown() {
         window.scrollTo(0,document.body.scrollHeight);
     }
-    function go(){
-        document.querySelector("#cohete").style.transition = "all 2s";   
-        document.querySelector("#cohete").style.bottom="1000px";
-        setTimeout(function(){
-            gameSection.style.display="none"
-            winSection.style.display="block";
-            totalTimer =timeForPlay- timeJumping;
-            modalImg.src = 'css/images/winner.jpg';
+    function createBanner(win){
+        gameSection.style.display="none"
+        winSection.style.display="block";
+        totalTimer =timeForPlay- timeJumping;
+        modalImg.src = win ?'css/images/winner.jpg' :'css/images/loser.jpg' ;
+        if(win===true){
             document.getElementById("points").innerHTML=totalTimer + "Segundos";
             document.getElementById("playerName").innerHTML=player.playerName;
-            socket.emit("weFinish",true);
-
-        },2000)
+        }
+    }
+    function finishGame(win){
+        document.querySelector("#cohete").style.transition = "all 1s";   
+        document.querySelector("#cohete").style.bottom="1000px";
+        socket.emit("weFinish",true);
+        if(win===true){
+            setTimeout(function(){
+                createBanner(true)
+            },2000)
+        }else{
+            setTimeout(function(){
+                createBanner(false)
+            },2000)
+        }
     }
     function sentNewPlayer(player){
         console.log(player)
@@ -121,7 +133,6 @@
         var time = player.totalTimer;
         var tel = player.playerTel;
         var data = "name="+name+"&mail="+mail+"&time="+time+"&phone="+tel;
-        console.log(data)
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         xhr.addEventListener("readystatechange", function () {
@@ -137,7 +148,6 @@
      }
     function loopVideos(){
         var whatVideo =Math.floor((Math.random() * videos.length));
-        console.log(whatVideo)
         this.pause()
         video.src=videos[whatVideo];
         video.play();

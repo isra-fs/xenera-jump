@@ -5,16 +5,12 @@ var jumpPhone = (function(w,d){
     var c=0;
     
     //window.confirm("Fin Del Juego Acepta para Terminar");
+    socket.on("deviceMotionActivated",function(){
+        w.addEventListener('devicemotion',motionDetectionHandler)
+    });
     socket.on('aceptFinish',function(){
-       //w.confirm("Fin Del Juego Acepta para Terminar");
        finishCurrentGame()
     })
-    socket.on("stopJumpPhone",function(){
-        w.removeEventListener("devicemotion",motionDetectionHandler);
-        d.querySelector('.start-jumping').classList.remove('hide-jumping');
-       // d.getElementById('jumping').classList.toggle('hide-jumping');
-       finishCurrentGame()
-    });
     function finishCurrentGame(){
         if (confirm("Fin Del Juego Acepta para Terminar!")) {
             socket.emit('endFromPhone',true);
@@ -23,6 +19,7 @@ var jumpPhone = (function(w,d){
                 socket.emit('endFromPhone',true);
             location.reload()        
         } 
+        w.removeEventListener("devicemotion",motionDetectionHandler);
     }
     function motionDetectionHandler(e){
         goDown = e.accelerationIncludingGravity.y< 0 ? true: goDown;
@@ -39,7 +36,6 @@ var jumpPhone = (function(w,d){
             var playerNamer = document.getElementById("playerNamer").value;
             var playerMail= document.getElementById("playerMail").value; 
             var playerTel= document.getElementById("playerTel").value; 
-            
             if(playerMail  && playerNamer){
                 var  player ={
                     "playerName": playerNamer,
@@ -47,7 +43,6 @@ var jumpPhone = (function(w,d){
                     "playerTel":playerTel
                 }        
                 socket.emit("startGame",player);
-                w.addEventListener('devicemotion',motionDetectionHandler)
             }
            
         }

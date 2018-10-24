@@ -49,9 +49,13 @@ app.get('/jump', function(req, res){
 });
 
 io.on('connection', function(socket){
+  console.log("newClient")
   socket.on("endFromPhone",function(){
     console.log("saveAnReload")
     io.emit("saveAnReload",true);
+  })
+  socket.on("activaDeviceMotion",function(){
+    io.emit("deviceMotionActivated",true);
   })
   socket.on('startGame', function(msg){
     console.log(msg)
@@ -60,9 +64,7 @@ io.on('connection', function(socket){
   socket.on("jump",function(){
       io.emit('levelUp',true);
   });
-  socket.on("stopJump",function(){
-    io.emit("stopJumpPhone",true);
-  });
+  
   socket.on('weFinish',function(){
     console.log("weFinihs")
     io.emit('aceptFinish',true);
@@ -96,6 +98,7 @@ function getIPAddress() {
   else return localIPInfo
 }
 http.listen(3000, function(){
+  //my_player.delteDEv(db)
   console.log("##############Server is working##############")
   var wifiAddress =getIPAddress();
  // opn('http://localhost:3000', {app: 'Chrome'});
