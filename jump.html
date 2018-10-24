@@ -10,18 +10,19 @@
     <script src="js/jump.js"></script>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/jump.css">
-    <style>
-    
-    </style>
 </head>
 <body>
 <div class="xenera-jump">
-    
+    <div class="logo-xenera">
+        <img src="css/images/2.png" alt="">
+    </div>
     <form>
         <h2>Nombre:</h2>
-        <input type="text" id="playerNamer"/>
+        <input type="text" id="playerNamer"required/>
         <h2>Email:</h2>
         <input type="email"id="playerMail" required/>
+        <h2>Telefono:</h2>
+        <input type="text" id="playerTel" required/>
     </form>
 <button onclick="jumpPhone.startGame()"class="start-jumping" id="startJumping" >Start Jumping</button>  
 </div>

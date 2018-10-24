@@ -24,9 +24,8 @@
         heightTotal:0,
         totalAvanced:0
     }
-    // Get the modal
-    var modal = document.getElementById('myModal');
     var modalImg = document.getElementById("img01");
+    modalImg.src = 'css/images/winner.jpg';
     var video=  document.getElementById("xeneraVideo");
     var gameSection= document.getElementById("game");
     var videoSection = document.getElementById("videos");
@@ -36,6 +35,7 @@
     var timeForPlay = 60;
     socket.on("saveAnReload",function(){
         player.totalTimer= totalTimer;
+        console.log("saveAnReload")
         sentNewPlayer(player)
         location.reload()
     })
@@ -44,7 +44,7 @@
         player = data;
             const promesa = new Promise(
                 function(resolve, reject) {
-                    difficulty = 30;
+                    difficulty = 530;
                     video.pause();
                     videoSection.style.display="none";
                     winSection.style.display="none";
@@ -64,6 +64,7 @@
             return;
         }
         timeJumping=x;
+        console.log(timeJumping)
         timeElm.innerHTML = x;
             return setTimeout(() => {timer(--x)}, 1000)
     }
@@ -106,9 +107,8 @@
             gameSection.style.display="none"
             winSection.style.display="block";
             totalTimer =timeForPlay- timeJumping;
-            modal.style.display = "block";
             modalImg.src = 'css/images/winner.jpg';
-            document.getElementById("points").innerHTML=totalTimer;
+            document.getElementById("points").innerHTML=totalTimer + "Segundos";
             document.getElementById("playerName").innerHTML=player.playerName;
             socket.emit("weFinish",true);
 
@@ -117,9 +117,11 @@
     function sentNewPlayer(player){
         console.log(player)
         var name = player.playerName;
-        var mail =player.playerMail;// player."isra.fsol@gmail.com";
+        var mail =player.playerMail;
         var time = player.totalTimer;
-        var data = "name="+name+"&mail="+mail+"&time="+time;
+        var tel = player.playerTel;
+        var data = "name="+name+"&mail="+mail+"&time="+time+"&phone="+tel;
+        console.log(data)
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         xhr.addEventListener("readystatechange", function () {
@@ -143,6 +145,7 @@
     function initVIdeo(){
        video.src = videos[0];
        gameSection.style.display="none";
+       winSection.style.display="none";
        videoSection.style.display="block";
     }
     video.addEventListener('ended',loopVideos);

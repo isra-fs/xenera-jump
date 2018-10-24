@@ -36,14 +36,16 @@ var jumpPhone = (function(w,d){
     }
     return {
         startGame: function(){
-           
             var playerNamer = document.getElementById("playerNamer").value;
             var playerMail= document.getElementById("playerMail").value; 
+            var playerTel= document.getElementById("playerTel").value; 
+            
             if(playerMail  && playerNamer){
                 var  player ={
                     "playerName": playerNamer,
-                    "playerMail" :playerMail
-                }            
+                    "playerMail" :playerMail,
+                    "playerTel":playerTel
+                }        
                 socket.emit("startGame",player);
                 w.addEventListener('devicemotion',motionDetectionHandler)
             }

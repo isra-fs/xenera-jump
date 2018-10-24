@@ -34,6 +34,7 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Time</th>
+                <th>Phone</th>
             </thead>
         </tr>
         <tbody>
@@ -64,12 +65,15 @@
                     var name =document.createElement("td");
                     var mail =document.createElement("td");
                     var time =document.createElement("td");
+                    var phone =document.createElement("td");
                     name.innerHTML = data[player].name;
                     mail.innerHTML = data[player].mail;
-                    time.innerHTML = data[player].time;;
+                    time.innerHTML = data[player].time;
+                    phone.innerHTML= data[player].phone
                     tr.appendChild(name);
                     tr.appendChild(mail);
                     tr.appendChild(time);
+                    tr.appendChild(phone);
                     table.appendChild(tr);
                 }
             }

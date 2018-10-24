@@ -1,8 +1,9 @@
-
+ body {
+ background-color: #06101e;
+}
 
 .parallax{
     min-height: 9101px; 
-    background-size: 100% 9101px;
  }
  .cohete {
     height: 400px; 
@@ -32,28 +33,22 @@
 #jumps{
     right: 0;
 }
-
-
-
-
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-  
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
+section#win {
+    position: relative;
+    text-align: center;
+    color: white;
 }
-
-/* Modal Content (image) */
-.modal-content {
-    margin: auto;
-    display: block;
-    width: 100%;
-  
+.player-name,.player-points {
+    position: absolute;
+    font-size: 50px;
+    left: 260px;
 }
-
+.player-name{
+    bottom: 280px;
+}
+.player-points {
+    bottom: 175px;
+}
 
 
 

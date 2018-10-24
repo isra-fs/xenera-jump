@@ -5,8 +5,8 @@
  * @param {array} player - data to insert into players
  */
 function newPlayer(db, player) {
-    console.log(player.name)
-    db.run("INSERT INTO players (name,mail,time) VALUES('"+player.name+"','"+player.mail+"',"+player.time+")", function(err) {
+    console.log(player)
+    db.run("INSERT INTO players (name,mail,time,phone) VALUES('"+player.name+"','"+player.mail+"',"+player.time+","+player.phone+")", function(err) {
         if (err) {
             return console.error(err.message);
         }
