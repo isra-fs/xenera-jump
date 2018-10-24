@@ -43,7 +43,7 @@
         player = data;
             const promesa = new Promise(
                 function(resolve, reject) {
-                    difficulty = 400;
+                    difficulty = 35;
                     video.pause();
                     videoSection.style.display="none";
                     winSection.style.display="none";
