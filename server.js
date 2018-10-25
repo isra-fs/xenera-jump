@@ -98,9 +98,9 @@ function getIPAddress() {
   else return localIPInfo
 }
 http.listen(3000, function(){
-  //my_player.delteDEv(db)
+  my_player.delteDEv(db)
   console.log("##############Server is working##############")
   var wifiAddress =getIPAddress();
- // opn('http://localhost:3000', {app: 'Chrome'});
+  opn('http://localhost:3000', {app: 'Chrome'});
   console.log("Write in your Device browser: " +"http://"+ wifiAddress.IPv4 +":3000/jump")
 });

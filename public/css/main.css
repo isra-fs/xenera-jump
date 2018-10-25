@@ -1,15 +1,21 @@
  body {
  background-color: #06101e;
+ 
 }
+
 section#loadingSection{
     width: 100%;
     display: none;
 }
-.parallax{
-    min-height: 9101px; 
- }
+section#loadingSection >img{
+    width: 168px;
+    display: block;
+    margin: auto;
+    margin-top: 260px;
+}
+
  .cohete {
-    height: 400px; 
+    height: 500px; 
     margin: 0 auto;;
 }
 .header{
@@ -39,18 +45,22 @@ section#loadingSection{
 section#win {
     position: relative;
     text-align: center;
-    color: white;
+    color: #000000;
 }
 .player-name,.player-points {
     position: absolute;
-    font-size: 50px;
-    left: 260px;
+    font-size: 40px;
+    
 }
+progress::-webkit-progress-value { background:#a3640d; }
 .player-name{
-    bottom: 280px;
+    bottom: 198px;
+    left: 136px;
 }
 .player-points {
-    bottom: 175px;
+    bottom: 123px;
+    left: 185px;
+    color:white;
 }
 
 

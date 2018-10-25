@@ -36,13 +36,16 @@ var jumpPhone = (function(w,d){
             var playerNamer = document.getElementById("playerNamer").value;
             var playerMail= document.getElementById("playerMail").value; 
             var playerTel= document.getElementById("playerTel").value; 
-            if(playerMail  && playerNamer){
+            playerMail= !playerMail ? "N/A" : playerMail;
+            playerTel= !playerTel ? "000000" :playerTel;
+            if( playerNamer){
                 var  player ={
                     "playerName": playerNamer,
                     "playerMail" :playerMail,
                     "playerTel":playerTel
                 }        
                 socket.emit("startGame",player);
+                document.getElementById("gameZone").style.display="none";
             }
            
         }

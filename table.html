@@ -41,13 +41,13 @@
         </tbody>
     </table>
 <div style="width:100%">
-    <progress min="0" max="10000" value="5012" id="funding" style="
+    <!-- <progress min="0" max="10000" value="5012" id="funding" style="
             width: 20%;
     height: 40px;
     transform: rotate(-90deg);
     background-color: #a3640d;
     position: fixed;
-    left: -164px;"></progress>
+    left: -164px;"></progress> -->
 </div>
     
 </body>
@@ -61,6 +61,7 @@
             var listPlayers =function(data){
                 var table = document.getElementById("listPlayers")
                 for(player in data){
+                    console.log(data)
                     var tr= document.createElement("tr");
                     var name =document.createElement("td");
                     var mail =document.createElement("td");

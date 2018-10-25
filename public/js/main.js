@@ -6,11 +6,14 @@
         'css/images/4.gif',
         'css/images/5.gif',
         'css/images/6.gif',
-        'css/images/7.gif'
+        'css/images/7.gif',
+        'css/images/8.gif',
+
     ];
     var videos=[
         "videos/1.mp4",
-        "videos/1.mp4"
+        "videos/2.mp4",
+        "videos/3.mp4"
     ]
     var c=0;
     var socket = io();
@@ -25,7 +28,6 @@
         totalAvanced:0
     }
     var modalImg = document.getElementById("img01");
-    modalImg.src = 'css/images/winner.jpg';
     var video=  document.getElementById("xeneraVideo");
     var gameSection= document.getElementById("game");
     var videoSection = document.getElementById("videos");
@@ -36,26 +38,28 @@
     socket.on("saveAnReload",function(){
         player.totalTimer= totalTimer;
         sentNewPlayer(player)
-        location.reload()
+       location.reload()
     })
     initVIdeo();
     socket.on("letsPlay",function(data){
         player = data;
             const promesa = new Promise(
                 function(resolve, reject) {
-                    difficulty = 35;
+                    difficulty = 25;
                     video.pause();
                     videoSection.style.display="none";
                     winSection.style.display="none";
-                    gameSection.style.display="block";
-                    myProgress.heightTotal = document.body.scrollHeight;
-                    document.getElementById("myProgress").max=  myProgress.heightTotal;
+                    
+                    document.getElementById("loadingSection").style.display="block";
+                    
                     image.src=travellers[0];
                 }
             );
-        promesa.then(scroDown())
+        promesa//.then(scroDown())
         .then(setTimeout(()=>{
-            socket.emit("activaDeviceMotion",true);
+            socket.emit("activaDeviceMotion",true);  
+            document.getElementById("loadingSection").style.display="none";
+            scroDown()
         },6000))
     });
     let timeElm = document.getElementById('timeElm');
@@ -100,15 +104,18 @@
         }
     }
     function scroDown() {
+        gameSection.style.display="block";
+        myProgress.heightTotal = document.body.scrollHeight;
+        document.getElementById("myProgress").max=  myProgress.heightTotal;
         window.scrollTo(0,document.body.scrollHeight);
     }
     function createBanner(win){
         gameSection.style.display="none"
         winSection.style.display="block";
         totalTimer =timeForPlay- timeJumping;
-        modalImg.src = win ?'css/images/winner.jpg' :'css/images/loser.jpg' ;
+        modalImg.src = win===true ?'css/images/winner.png' :'css/images/loser.png' ;
         if(win===true){
-            document.getElementById("points").innerHTML=totalTimer + "Segundos";
+            document.getElementById("points").innerHTML=totalTimer + " segundos";
             document.getElementById("playerName").innerHTML=player.playerName;
         }
     }
@@ -148,7 +155,7 @@
      }
     function loopVideos(){
         var whatVideo =Math.floor((Math.random() * videos.length));
-        this.pause()
+        this.pause();
         video.src=videos[whatVideo];
         video.play();
     }
