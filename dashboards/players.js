@@ -5,12 +5,12 @@
  * @param {array} player - data to insert into players
  */
 function newPlayer(db, player) {
-    console.log(player)
-    db.run("INSERT INTO players (name,mail,time,phone) VALUES('"+player.name+"','"+player.mail+"',"+player.time+","+player.phone+")", function(err) {
+   // console.log(player)
+    db.run("INSERT INTO players (name,mail,time,phone) VALUES('"+player.name+"','"+player.mail+"','"+player.time+"',"+player.phone+")", function(err) {
         if (err) {
             return console.error(err.message);
         }
-        console.log(`A row has been inserted with row id ${this.lastID}`);
+       // console.log(`A row has been inserted with row id ${this.lastID}`);
     });
 }
 /**

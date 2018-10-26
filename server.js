@@ -23,7 +23,7 @@ app.use(function(req, res, next) {
 app.post('/player', (req, res) => {
   try {
       let player = req.body;
-      console.log(player)
+      //console.log(player)
       //let player = { id: 1, date: '2018-01-26' }
       my_player.newPlayer(db, player);
      // getElevator();
@@ -49,16 +49,14 @@ app.get('/jump', function(req, res){
 });
 
 io.on('connection', function(socket){
-  console.log("newClient")
+ 
   socket.on("endFromPhone",function(){
-    console.log("saveAnReload")
     io.emit("saveAnReload",true);
   })
   socket.on("activaDeviceMotion",function(){
     io.emit("deviceMotionActivated",true);
   })
   socket.on('startGame', function(msg){
-    console.log(msg)
     io.emit("letsPlay",msg);
   });
   socket.on("jump",function(){
@@ -66,7 +64,7 @@ io.on('connection', function(socket){
   });
   
   socket.on('weFinish',function(){
-    console.log("weFinihs")
+  
     io.emit('aceptFinish',true);
   });
   socket.on("getListPlayers",(data)=>{
@@ -98,7 +96,7 @@ function getIPAddress() {
   else return localIPInfo
 }
 http.listen(3000, function(){
-  my_player.delteDEv(db)
+  //my_player.delteDEv(db)
   console.log("##############Server is working##############")
   var wifiAddress =getIPAddress();
   opn('http://localhost:3000', {app: 'Chrome'});

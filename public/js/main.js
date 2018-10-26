@@ -1,3 +1,8 @@
+var socket = io();
+socket.on("saveAnReload",function(){
+    console.log("saveAnreload")
+    location.reload()
+ })
 ;(function(){
     var travellers=[
         'css/images/1.gif',
@@ -16,7 +21,7 @@
         "videos/3.mp4"
     ]
     var c=0;
-    var socket = io();
+   
     var jumps=0;
     var auxCont=0;
     var pictureNumber =0;
@@ -35,11 +40,7 @@
     var winSection = document.getElementById("win")
     var totalTimer=0;
     var timeForPlay = 60;
-    socket.on("saveAnReload",function(){
-        player.totalTimer= totalTimer;
-        sentNewPlayer(player)
-       location.reload()
-    })
+    
     initVIdeo();
     socket.on("letsPlay",function(data){
         player = data;
@@ -62,17 +63,17 @@
             scroDown()
         },6000))
     });
-    let timeElm = document.getElementById('timeElm');
-    let timer = (x)=> {
-        if(x === 0) {
-            finishGame(false);
-            jumps=0;
-            return;
-        }
-        timeJumping=x;
-        timeElm.innerHTML = x;
-            return setTimeout(() => {timer(--x)}, 1000)
-    }
+    // var timeElm = document.getElementById('timeElm');
+    // let timer = (x)=> {
+    //     if(x === 0) {
+    //         timeOver(false);
+    //         jumps=0;
+    //         return;
+    //     }
+    //     timeJumping=x;
+    //     timeElm.innerHTML = x;
+    //         return setTimeout(() => {timer(--x)}, 1000)
+    // }
  
     socket.on("levelUp",function(){
         scrollTop()
@@ -84,7 +85,8 @@
     var jumping= true;
     function scrollTop(){
         if(jumping){
-            timer(timeForPlay);
+            inicio ()
+           // timer(timeForPlay);
             jumping=false;
         }
         var myBodyHeight = document.body.clientHeight;
@@ -96,7 +98,7 @@
             pictureNumber=pictureNumber+1;
             auxCont=0;
             if(pictureNumber===travellers.length){
-                finishGame(true); 
+                finishGame(); 
                 return;
             }else{
                 image.src = travellers[pictureNumber];
@@ -112,26 +114,41 @@
     function createBanner(win){
         gameSection.style.display="none"
         winSection.style.display="block";
-        totalTimer =timeForPlay- timeJumping;
+      //  totalTimer =timeForPlay- timeJumping;
+         console.log("countTimeValue: " + counTime())
+        totalTimer =counTime()
+        console.log("totaltimer: " + totalTimer)
+        stopTimer();
         modalImg.src = win===true ?'css/images/winner.png' :'css/images/loser.png' ;
         if(win===true){
             document.getElementById("points").innerHTML=totalTimer + " segundos";
             document.getElementById("playerName").innerHTML=player.playerName;
         }
     }
-    function finishGame(win){
+    function timeOver(){
+        totalTimer ="End Time";
+        player.totalTimer= totalTimer;
+        sentNewPlayer(player)
+        stopTimer()
+        socket.emit("weFinish",true);
         document.querySelector("#cohete").style.transition = "all 1s";   
         document.querySelector("#cohete").style.bottom="1000px";
+        setTimeout(function(){
+            createBanner(false);
+        },2000)
+        
+    }
+    function finishGame(){
+        document.querySelector("#cohete").style.transition = "all 1s";   
+        document.querySelector("#cohete").style.bottom="1000px";
+        totalTimer = counTime();
+        player.totalTimer= totalTimer;
+        sentNewPlayer(player)
+        stopTimer()
         socket.emit("weFinish",true);
-        if(win===true){
-            setTimeout(function(){
-                createBanner(true)
-            },2000)
-        }else{
-            setTimeout(function(){
-                createBanner(false)
-            },2000)
-        }
+        setTimeout(function(){
+            createBanner(true)
+        },2000)
     }
     function sentNewPlayer(player){
         console.log(player)
@@ -166,4 +183,47 @@
        videoSection.style.display="block";
     }
     video.addEventListener('ended',loopVideos);
+
+    var centesimas = 0;
+    var segundos = 0;
+    var minutos = 0;
+    var secondElement= document.getElementById("seconds");
+    var miliSecondsElement= document.getElementById("miliseconds")
+    function inicio () {
+        control = setInterval(cronometro,10);
+    }
+    function stopTimer(){
+        clearInterval(control);
+    }
+    function counTime () {
+        let time = segundos + ":" + centesimas;
+        return time;
+    }
+    
+    function cronometro () {
+        if (centesimas < 99) {
+            centesimas++;
+            if (centesimas < 10) { centesimas = "0"+centesimas }
+            if(centesimas!==-1)
+            miliSecondsElement.innerHTML= centesimas;
+        }
+        if (centesimas == 99) {
+            centesimas = -1;
+        }
+        if (centesimas == 0) {
+            segundos ++;
+            if (segundos < 10) { segundos = "0"+segundos }
+            if(segundos!==-1)
+            secondElement.innerHTML= segundos;
+        }
+        if (segundos == 59) {
+            segundos = -1;
+        }
+        if ( (centesimas == 0)&&(segundos == 0) ) {
+            minutos++;
+            if (minutos < 10) { minutos = "0"+minutos }
+            timeOver()
+        }
+        
+    }
 }());
